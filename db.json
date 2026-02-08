@@ -1,6 +1,6 @@
 {
   "movies": [
-    { "id": 1, "name": "Fast and Furious 6", "price": 100 },
+    { "id": 1, "name": "The Fast and the Furious 6", "price": 100 },
     { "id": 2, "name": "The Mummy Returns", "price": 50 },
     { "id": 3, "name": "Jumanji: Welcome to the Jungle", "price": 70 },
     { "id": 4, "name": "Rampage", "price": 40 }
