@@ -1,16 +1,14 @@
-import { fetchMovies } from './api.js';
+import fetchMovies from './api.js';
 import Movie from './movies.js';
 
-
-const container = document.querySelector('.container');
-const seats = document.querySelectorAll('.row .seat:not(.occupied)');
+const seatContainer = document.querySelector('.container');
 
 const countElement = document.getElementById('count');
 const totalElement = document.getElementById('total');
 
 const movieSelect = document.getElementById('movie');
-
 const serverStatusMessage = document.createElement('p');
+
 document.body.insertBefore(serverStatusMessage, document.body.firstChild);
 
 let ticketPrice = 0;
@@ -32,31 +30,6 @@ function populateMovieSelect(movies) {
     });
 }
 
-async function populateMovies() {
-    try{
-        const moviesData = await fetchMovies();
-        const movieObjects = moviesData.map(m => new Movie(m.id, m.name, m.price));
-        populateMovieSelect(movieObjects);
-
-        serverStatusMessage.textContent = 'Movies loaded from server.';
-        serverStatusMessage.style.color = 'green';
-           
-    } catch(error) {
-        console.error('Error fetching movies from JSON-server:', error);
-        console.warn('Using fallback movies instead.');
-        populateMovieSelect(fallbackMovies);
-
-        serverStatusMessage.textContent = 'Failed to load movies from server. Using fallback data.';
-        serverStatusMessage.style.color = 'red';
-    }   
-    setInitialTicketPrice();
-    
-}
-function setInitialTicketPrice() {
-    ticketPrice = parseInt(movieSelect.value, 10)
-    updateSelectedCount();
-}
-
 function updateSelectedCount() {
     const selectedSeats = document.querySelectorAll('.row .seat.selected');
     const selectedSeatsCount = selectedSeats.length;
@@ -70,11 +43,34 @@ movieSelect.addEventListener('change', (event) => {
     updateSelectedCount();
 });
 
-container.addEventListener('click', (event) => {
-    const target = event.target;
+function setInitialTicketPrice() {
+    ticketPrice = parseInt(movieSelect.value, 10);
+    updateSelectedCount();
+}
+async function populateMovies() {
+    try {
+        const moviesData = await fetchMovies();
+        const movieObjects = moviesData.map((m) => new Movie(m.id, m.name, m.price));
+        populateMovieSelect(movieObjects);
+
+        serverStatusMessage.textContent = 'Movies loaded from server.';
+        serverStatusMessage.style.color = 'green';
+    } catch (error) {
+        console.error('Error fetching movies from JSON-server:', error);
+        console.warn('Using fallback movies instead.');
+        populateMovieSelect(fallbackMovies);
+
+        serverStatusMessage.textContent = 'Failed to load movies from server. Using fallback data.';
+        serverStatusMessage.style.color = 'red';
+    }
+    setInitialTicketPrice();
+}
+
+seatContainer.addEventListener('click', (event) => {
+    const { target } = event;
     if (
-        target.classList.contains('seat') &&
-        !target.classList.contains('occupied')
+        target.classList.contains('seat')
+        && !target.classList.contains('occupied')
     ) {
         target.classList.toggle('selected');
         updateSelectedCount();
