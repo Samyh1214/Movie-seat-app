@@ -3,5 +3,5 @@ export default async function fetchMovies() {
     if (!response.ok) {
         throw new Error('Failed to fetch movies');
     }
-    return response.json(); // Removed redundant `await`
+    return response.json();
 }

@@ -17,8 +17,7 @@
         "indent": ["off"],
         "no-console": "off",
         "import/extensions": ["error", "ignorePackages", {
-            "js": "always",
-            "jsx": "always"
+            "js": "always"
         }]
     }
 }
