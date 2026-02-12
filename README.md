@@ -24,4 +24,8 @@ Dag 4
 
 Dag 5
 
-- Fixad kod med eslint, implementerade några regler. Uppdaterade mappstruktur.
+- Fixad kod med eslint samt implementerade några regler. Uppdaterade mappstruktur.
+
+Dag 6
+
+- Cleanup och små fixar
